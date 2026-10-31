@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#142b49">
+<meta name="description" content="Academia educativa de trading para aprender gráficos, estructuras y gestión del riesgo.">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<title>Mini Trader Academy</title>
+<style>
+:root{color-scheme:dark;--bg:#0d1725;--panel:#14243a;--card:#192d45;--line:#29425d;--txt:#f4f7fb;--muted:#b3c1d1;--green:#3ab58f;--gold:#f0c45d}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--txt);font:16px system-ui,-apple-system,Segoe UI,sans-serif}
+main{max-width:760px;margin:auto;padding:14px 14px 40px}.hero{background:linear-gradient(135deg,#142b49,#245c69);border-radius:20px;padding:20px;margin:4px 0 15px}
+.eyebrow{font-size:11px;letter-spacing:2px;color:#a8e6d5;font-weight:800}.hero h1{font-size:27px;margin:8px 0 3px}.sub{color:#d8e9ed;font-size:14px}
+.stats{display:flex;align-items:center;gap:12px;margin-top:20px}.stats .spacer{flex:1;text-align:right}
+.progressline{height:9px;background:#26394e;border-radius:20px;overflow:hidden;margin:7px 0 14px}.progressline div{height:100%;background:var(--green);width:0}
+nav{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:12px 0 18px}nav button{background:var(--panel);border:1px solid var(--line);color:var(--txt);border-radius:12px;padding:10px 2px;font-size:12px}nav button.active{background:#244b58;border-color:#48b99b}
+section{display:none}section.active{display:block}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.card{background:var(--card);border:1px solid var(--line);border-radius:15px;padding:14px;margin-bottom:10px}.tile{display:flex;align-items:center;gap:10px;text-align:left;width:100%;background:var(--card);border:1px solid var(--line);border-radius:13px;color:var(--txt);padding:13px;margin:5px 0}
+.muted{color:var(--muted);font-size:13px}.tag{font-size:11px;border-radius:30px;background:#263c53;padding:5px 9px;color:#dce8f4}
+button{font:inherit;cursor:pointer}.primary{background:#16806b;color:white;border:0;border-radius:12px;padding:12px 16px;font-weight:750;width:100%;margin-top:10px}.secondary{background:transparent;color:var(--txt);border:1px solid var(--line);border-radius:11px;padding:10px 13px}
+h2{font-size:20px;margin:8px 0 12px}h3{font-size:17px;margin:8px 0}.lessonbody{line-height:1.6}.answer{display:block;text-align:left;width:100%;background:#122237;border:1px solid var(--line);color:var(--txt);padding:12px;border-radius:11px;margin:7px 0}.answer.selected{border-color:var(--green);background:#193d3a}.feedback{font-size:13px;min-height:22px;margin-top:8px;color:#bfe9dc}
+.chart{width:100%;background:#101d2c;border-radius:13px;margin:8px 0}.medals{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}.medal{text-align:center;padding:15px 8px;background:var(--card);border:1px solid var(--line);border-radius:14px}.medal .emoji{font-size:30px}.medal.locked{opacity:.5}
+footer{text-align:center;color:var(--muted);font-size:11px;padding:15px}.install{display:none;margin-bottom:12px;background:#244b58;border:1px solid #3b877b;color:white;border-radius:12px;padding:12px;width:100%;font-weight:700}
+@media(min-width:600px){main{padding:22px}.hero{padding:26px}}
+</style>
+</head>
+<body>
+<main>
+ <div class="hero">
+  <div class="eyebrow">ACADEMIA DE TRADING</div><h1>MINI TRADER 🎓</h1><div class="sub">Aprende · Observa · Practica · Progresa</div>
+  <div class="stats"><div style="font-size:30px">🏆</div><div><b>Joven aprendiz</b><div class="sub">Tu aventura comienza aquí</div></div><div class="spacer"><b id="xp">0 XP</b><div class="sub">Puntos</div></div></div>
+ </div>
+ <button id="install" class="install">⬇ Instalar Mini Trader en este teléfono</button>
+ <div style="display:flex;justify-content:space-between;font-size:13px"><b>Tu progreso</b><span id="progressText" class="muted">0 de 10 lecciones</span></div><div class="progressline"><div id="progressBar"></div></div>
+ <nav><button class="active" data-tab="home">🏠<br>Inicio</button><button data-tab="lessons">📚<br>Lecciones</button><button data-tab="practice">📈<br>Práctica</button><button data-tab="awards">🏅<br>Medallas</button></nav>
+ <section id="home" class="active">
+  <h2>Tu escuela</h2><div class="grid"><div class="card"><div>📖</div><b id="doneCount">0/10</b><div class="muted">Lecciones completadas</div></div><div class="card"><div>🎯</div><b id="quizCount">0</b><div class="muted">Respuestas correctas</div></div></div>
+  <div class="card"><b>🚀 Tu siguiente misión</b><p class="muted">Aprende qué es una vela japonesa y descubre cómo cuentan la historia del precio.</p><button class="primary" data-go="lessons">Comenzar a aprender</button></div>
+  <h3>Camino de aprendizaje</h3><div id="homeLessons"></div>
+  <div class="card"><b>🛡️ Regla de oro</b><p class="muted">Un buen estudiante no necesita operar. Primero aprende a observar, esperar y protegerse de los riesgos.</p></div>
+ </section>
+ <section id="lessons"><h2>📚 Mis lecciones</h2><div id="lessonList"></div><div id="lessonDetail" class="card" hidden></div></section>
+ <section id="practice"><h2>📈 Laboratorio de gráficos</h2><p class="muted">Gráfico simulado: no son precios reales ni señales de compra o venta.</p>
+  <div class="card"><b>Reto: encuentra el soporte</b><svg class="chart" viewBox="0 0 340 190" role="img" aria-label="Velas ilustrativas y línea de soporte">
+  <g stroke="#34465a"><path d="M15 35H325 M15 75H325 M15 115H325 M15 155H325"/></g><path d="M15 145H325" stroke="#e8b64c" stroke-width="2" stroke-dasharray="6 4"/><text x="20" y="137" fill="#f2cb6b" font-size="10">Zona de soporte ilustrativa</text>
+  <g stroke="#aab7c8" stroke-width="2"><path d="M45 40V90 M70 55V110 M95 75V135 M120 105V155 M145 115V160 M170 110V155 M195 90V140 M220 65V110 M245 55V100 M270 70V120 M295 48V100"/></g>
+  <g><rect x="39" y="55" width="12" height="24" fill="#e16d6d"/><rect x="64" y="70" width="12" height="27" fill="#e16d6d"/><rect x="89" y="88" width="12" height="35" fill="#e16d6d"/><rect x="114" y="115" width="12" height="25" fill="#e16d6d"/><rect x="139" y="130" width="12" height="16" fill="#e16d6d"/><rect x="164" y="126" width="12" height="18" fill="#39b88b"/><rect x="189" y="105" width="12" height="23" fill="#39b88b"/><rect x="214" y="78" width="12" height="25" fill="#39b88b"/><rect x="239" y="68" width="12" height="18" fill="#e16d6d"/><rect x="264" y="81" width="12" height="22" fill="#39b88b"/><rect x="289" y="61" width="12" height="23" fill="#39b88b"/></g></svg>
+  <p class="muted">El precio baja varias veces hasta una zona parecida y después rebota. ¿Qué podría representar la línea amarilla?</p><div id="supportOptions"><button class="answer" data-q="support" data-a="wrong">A. Una resistencia</button><button class="answer" data-q="support" data-a="right">B. Un soporte</button><button class="answer" data-q="support" data-a="wrong">C. Una media móvil</button></div><div id="supportFeedback" class="feedback" aria-live="polite"></div></div>
+  <div class="card"><b>Reto de estructura</b><p class="muted">Si el precio marca máximos y mínimos cada vez más altos, ¿qué estructura observas?</p><div id="trendOptions"><button class="answer" data-q="trend" data-a="wrong">Tendencia bajista</button><button class="answer" data-q="trend" data-a="right">Tendencia alcista</button><button class="answer" data-q="trend" data-a="wrong">Mercado lateral</button></div><div id="trendFeedback" class="feedback" aria-live="polite"></div></div>
+ </section>
+ <section id="awards"><h2>🏅 Mi vitrina de medallas</h2><p class="muted">Las medallas se consiguen aprendiendo, no ganando dinero.</p><div id="medals" class="medals"></div></section>
+ <footer>Mini Trader Academy · Herramienta educativa · Sin dinero real<br>El progreso se guarda en este teléfono.</footer>
+</main>
+<script>
+const lessons=[
+['¿Qué es el trading?','El trading consiste en estudiar cómo cambian los precios de los activos. Un gráfico muestra movimientos pasados, pero no permite conocer el futuro con certeza.','🧭','Principiante'],
+['Velas japonesas','Cada vela resume cuatro datos: apertura, máximo, mínimo y cierre. El cuerpo muestra la diferencia entre apertura y cierre; las mechas muestran los extremos.','🕯️','Principiante'],
+['Soportes y resistencias','Un soporte es una zona donde el precio ha encontrado compras y ha frenado caídas. Una resistencia es una zona donde ha encontrado ventas y ha frenado subidas. Son zonas, no paredes exactas.','🧱','Principiante'],
+['Tendencias','En una tendencia alcista suelen aparecer máximos y mínimos crecientes. En una bajista, máximos y mínimos decrecientes. También existen rangos laterales.','📈','Principiante'],
+['Máximos y mínimos','Los máximos y mínimos ayudan a leer la estructura. Un cambio en esa secuencia puede advertir que la tendencia pierde fuerza, pero no confirma por sí solo un giro.','🔎','Principiante'],
+['Ruptura y retroceso','Una ruptura ocurre cuando el precio supera una zona importante. A veces vuelve a probarla: eso se llama retroceso o retest. Una ruptura puede fallar.','🚪','Intermedio'],
+['Confirmación','Una confirmación es evidencia adicional: cierre de vela, reacción en una zona y estructura coherente. Ninguna confirmación garantiza el siguiente movimiento.','✅','Intermedio'],
+['Patrones W y M','Una W puede parecer un doble suelo; una M, un doble techo. Conviene observar la zona intermedia, llamada neckline, y esperar una posible confirmación.','〽️','Intermedio'],
+['Medias móviles EMA','Una EMA da más peso a los precios recientes. Puede ayudar a observar dirección y contexto, pero no predice el mercado ni debe usarse sola.','〰️','Intermedio'],
+['Riesgo y disciplina','Antes de cualquier operación simulada hay que saber dónde se invalida la idea y cuánto se podría perder. Nunca arriesgues dinero que necesitas. Practicar sin dinero real es suficiente.','🛡️','Avanzado']
+];
+const questions=[
+['¿Qué muestra una vela japonesa?',['Solo el precio actual','Apertura, máximo, mínimo y cierre','El precio de mañana'],1,'Una vela resume cuatro datos del periodo que representa.'],
+['¿Qué es un soporte?',['Una zona donde puede frenarse una caída','Una garantía de subida','El nombre de una plataforma'],0,'El soporte es una zona de posible interés comprador, no una garantía.'],
+['¿Qué caracteriza una tendencia alcista?',['Máximos y mínimos descendentes','Máximos y mínimos crecientes','Precio siempre inmóvil'],1,'Los máximos y mínimos crecientes describen una estructura alcista.'],
+['¿Qué es una ruptura?',['Cuando el precio supera una zona relevante','Cuando se apaga el gráfico','Una ganancia segura'],0,'Una ruptura puede ser válida o fallida; se estudia el contexto.'],
+['¿Qué significa gestionar el riesgo?',['Operar sin pensar','Conocer y limitar la pérdida posible','Aumentar el tamaño para recuperar'],1,'La protección del capital y la disciplina son fundamentales.']
+];
+const medals=[['🌱','Primer paso',()=>state.done.length>=1],['🕯️','Lector de velas',()=>state.done.length>=2],['🧱','Arquitecto de niveles',()=>state.done.length>=3],['📈','Detective de tendencias',()=>state.done.length>=4],['🧠','Mente disciplinada',()=>state.done.length>=10],['🎯','Ojo de analista',()=>state.correct>=3]];
+const KEY='miniTraderAcademyProgressV1';
+let state={done:[],xp:0,correct:0,answers:{},practice:{}};
+try{const saved=JSON.parse(localStorage.getItem(KEY));if(saved)state={...state,...saved}}catch(e){}
+const $=id=>document.getElementById(id);
+function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){alert('No se pudo guardar el progreso en este dispositivo.');}}
+function tab(name){document.querySelectorAll('section').forEach(s=>s.classList.toggle('active',s.id===name));document.querySelectorAll('[data-tab]').forEach(b=>b.classList.toggle('active',b.dataset.tab===name));}
+document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>tab(b.dataset.tab)));
+document.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>tab(b.dataset.go)));
+function render(){
+ $('xp').textContent=state.xp+' XP';$('doneCount').textContent=state.done.length+'/10';$('quizCount').textContent=state.correct;$('progressText').textContent=state.done.length+' de 10 lecciones';$('progressBar').style.width=state.done.length*10+'%';
+ $('homeLessons').innerHTML=lessons.slice(0,4).map((l,i)=>`<div class="muted" style="padding:5px">${state.done.includes(i)?'✅':'⚪'} ${l[0]}</div>`).join('');
+ $('lessonList').innerHTML=lessons.map((l,i)=>`<button class="tile" data-lesson="${i}"><span style="font-size:25px">${l[2]}</span><span style="flex:1"><b>${i+1}. ${l[0]}</b><small class="muted" style="display:block">${l[3]}</small></span>${state.done.includes(i)?'✅':'📘'}</button>`).join('');
+ document.querySelectorAll('[data-lesson]').forEach(b=>b.addEventListener('click',()=>showLesson(+b.dataset.lesson)));
+ $('medals').innerHTML=medals.map(m=>`<div class="medal ${m[2]()?'':'locked'}"><div class="emoji">${m[2]()?m[0]:'🔒'}</div><b>${m[1]}</b><div class="muted">${m[2]()?'Conseguida':'Sigue aprendiendo'}</div></div>`).join('');
+}
+function showLesson(i){
+ const l=lessons[i],q=questions[i%questions.length],prior=state.answers[i];const box=$('lessonDetail');box.hidden=false;
+ box.innerHTML=`<span class="tag">Lección ${i+1} · ${l[3]}</span><div style="font-size:34px;margin-top:10px">${l[2]}</div><h3>${l[0]}</h3><p class="lessonbody">${l[1]}</p><div class="card" style="background:#122237"><b>🧠 Comprueba lo aprendido</b><p>${q[0]}</p>${q[1].map((v,j)=>`<button class="answer ${prior===j?'selected':''}" data-choice="${j}">${String.fromCharCode(65+j)}. ${v}</button>`).join('')}<div id="lessonFeedback" class="feedback">${prior!==undefined?(prior===q[2]?'✅ ¡Correcto! ':'💡 Repasa la explicación. ')+q[3]:''}</div></div><button id="finish" class="primary" ${state.done.includes(i)?'disabled':''}>${state.done.includes(i)?'Lección completada':'Completar lección'}</button>`;
+ box.querySelectorAll('[data-choice]').forEach(b=>b.addEventListener('click',()=>{state.answers[i]=+b.dataset.choice;save();box.querySelectorAll('[data-choice]').forEach(x=>x.classList.toggle('selected',x===b));$('lessonFeedback').textContent=+b.dataset.choice===q[2]?'✅ ¡Muy bien! '+q[3]:'💡 Inténtalo de nuevo. Lee la explicación y vuelve a pensar.';}));
+ $('finish').addEventListener('click',()=>{if(state.answers[i]===undefined){$('lessonFeedback').textContent='Primero responde la pregunta.';return;}if(!state.done.includes(i)){state.done.push(i);state.xp+=20;if(state.answers[i]===q[2])state.correct++;save();render();showLesson(i);}});
+}
+function setupPractice(id,feedbackId,key){
+ document.querySelectorAll(`#${id} .answer`).forEach(b=>b.addEventListener('click',()=>{
+  const good=b.dataset.a==='right';document.querySelectorAll(`#${id} .answer`).forEach(x=>x.classList.toggle('selected',x===b));
+  $(feedbackId).textContent=good?'✅ ¡Correcto! Buena observación.':'💡 No exactamente. Observa el comportamiento del precio y prueba otra vez.';
+  if(good&&!state.practice[key]){state.practice[key]=true;state.xp+=10;state.correct++;save();render();}
+ }));
+}
+setupPractice('supportOptions','supportFeedback','support');setupPractice('trendOptions','trendFeedback','trend');render();
+let deferredPrompt;const installBtn=$('install');
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;installBtn.style.display='block';});
+installBtn.addEventListener('click',async()=>{if(!deferredPrompt){alert('En Chrome Android, abre el menú ⋮ y elige “Instalar aplicación” o “Añadir a pantalla de inicio”.');return;}deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;installBtn.style.display='none';});
+if('serviceWorker' in navigator && (location.protocol==='https:'||location.hostname==='localhost'))window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(console.error));
+</script>
+</body></html>
